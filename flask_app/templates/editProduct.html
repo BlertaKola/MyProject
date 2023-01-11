@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/edit.css') }}">
+
+    <title>Editing</title>
+</head>
+<body class="masthead bg-dark" style="background-image: url('static/img/background.jpeg'); background-size: cover;">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <img style="height: auto; width: 2%;" class="mr-3"  src="{{ url_for('static', filename='img/letter-b.png') }}" alt="logo">
+        
+        <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="#">Bell's Shop</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link " href="/adminDashboard">Home</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/addProduct">Add products <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/orders">Orders</a>
+                </li>
+            </ul>
+        </div>
+        <a class="nav-link" href="/logout"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/turn-off.png') }}" alt="heart"></a>
+    </nav>
+    <h3 class="text-center mt-4 text-light">Edit your product</h3>
+    <div class="body">
+        <div class=" form-box d-flex justify-content-around mt-5">
+            <div class="header-text col-lg-4 ">
+
+                <form action="/editProductForm/{{product.id}}" method="post" enctype="multipart/form-data" class="w-100 m-auto row h-auto">
+                    <div>
+                        <div class="form-group">
+                            <label for="name">Enter products name:</label>
+                            <input type="text" class="form-control" name="name" value="{{product.name}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Enter products description</label>
+                        </div>
+                        <textarea name="description" class="p-2" cols="30" rows="5" name="description" >{{product.description}}</textarea>
+                        <div class="form-group">
+                            <label for="price">Enter products price in $:</label>
+                            <input type="number" step="any" class="form-control" name="price" value="{{product.price}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Enter products quantity:</label>
+                            <input type="number" min="1" class="form-control" name="quantity" value="{{product.quantity}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Upload a photo for your product:</label>
+                            <input type="file" min="1" class="form-control alert alert-primary h-auto w-auto p-3 mr-3" name="imageProduct" autocomplete="off" required>
+                        </div>
+                        <button type="submit" class="btn btn-dark">Submit</button>
+        
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,59 @@
+.centerThis{
+    top: 45%;
+    left: 25%;
+}
+.masthead{
+    background-size: cover;
+    min-height: 100vh;
+    position: relative;
+    
+}
+
+
+@media (max-width: 768px){
+    .masthead{
+        min-height: 50vh;
+    }    
+}
+
+
+.footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+
+
+.services .services-info {
+	margin: 0 0 30px;
+	padding: 10px;
+	border-radius: 3px;
+}
+
+
+
+.services a {
+	color: black;
+	padding: 3px;
+}
+
+.services a:hover {
+	text-decoration: none;
+    color: #1c517e;
+}
+
+.services img{
+    border-radius: 2%;
+}
+
+.services-info:hover{
+    box-shadow: 0 10px 15px rgba(0,0,0,.3);
+    transform: scale(1.03);
+    border-radius: 2%;
+    mix-blend-mode: normal;
+}

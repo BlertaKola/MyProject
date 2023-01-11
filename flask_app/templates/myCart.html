@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>My shopping bag</title>
+    <style>
+        body{
+            background: rgb(213,213,215);
+            background: linear-gradient(90deg, rgba(213,213,215,1) 0%, rgba(140,140,145,1) 35%, rgba(205,219,222,1) 100%);
+        }
+    </style>
+</head>
+<body class="masthead bg-light" >
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+        <img style="height: auto; width: 2%;" class="mr-3"  src="{{ url_for('static', filename='img/letter-b.png') }}" alt="logo">
+        
+        
+        <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="/dashboard">Bell's Shop</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">Home</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/myWishlist"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/removeWishlist.png') }}" alt="heart"></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/myCart"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/bag.png') }}" alt="heart"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ratings"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/review.png') }}" alt="heart"></a>
+                </li>
+            </ul>
+        </div>
+        <a class="nav-link" href="/logout"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/turn-off.png') }}" alt="heart"></a>
+    </nav>
+    <section class="services">
+        <div class="container">
+            <div class="row">
+                <!-- <h2 class="text-center">What we can do for you</h2> -->
+                {% if carts %}
+                    {% for cart in carts %}
+                        
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="services-info text-center">
+                                <img class="card-img-top" style="height: 100%; width: 100%;" src="/static/img/{{cart.imageProduct}}" alt="Card image cap">
+                                <i class="fa fa-bar-chart fa-4x"></i>
+                                <h4>{{cart.name}} </h4>
+                                <p>Price: <bold>${{cart.price}}</bold></p>
+                                <a class="ml-3" href="/removeFromCart/{{cart.id}}"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/remove-from-cart.png') }}" alt="removeWishlist"></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="align">
+                        <p>If you want to procced with the order , click on the order button</p>
+                        <a href="/orderProducts" class="btn btn-secondary btn-lg active ml-5 p-2 w-50 mb-4" role="button" aria-pressed="true">Order</a>
+                        <div class="ml-5">
+                            <p><strong>Your sum Total is ${{sumTotal.sumTotal}}</strong> </p>
+                            <div id="paypal-button"></div>
+                        </div>
+                    </div>
+                    
+                    
+
+                {% else %}
+                        <div class="centerThis alert alert-danger border border-1 position-absolute p-3 w-50 m-auto mt-5" role="alert">
+                            <h4 class="color text-center">Your Cart is empty, go add some products!</h4>
+                        </div>
+                        
+                    
+                {% endif %}
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer d-inline justify-content-between">
+        <p class="text-light text-muted text-center">All rights reserved Terms of Use and Privacy Policy</p>
+    </footer>
+    
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+<script>
+    var CREATE_PAYMENT_URL  = 'http://127.0.0.1:5000/payment';
+    var EXECUTE_PAYMENT_URL = 'http://127.0.0.1:5000/execute';
+
+    paypal.Button.render({
+
+        env: 'sandbox', // Or 'sandbox'
+
+        commit: true, // Show a 'Pay Now' button
+
+        payment: function() {
+            return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
+                return data.paymentID;
+            });
+        },
+
+        onAuthorize: function(data) {
+            return paypal.request.post(EXECUTE_PAYMENT_URL, {
+                paymentID: data.paymentID,
+                payerID:   data.payerID
+            }).then(function(res) {
+
+                console.log(res.success)
+                // The payment is complete!
+                // You can now show a confirmation message to the customer
+            });
+        }
+
+    }, '#paypal-button');
+</script>
+</body>
+</html>

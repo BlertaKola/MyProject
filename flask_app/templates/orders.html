@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/orders.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body{
+            background: rgb(213,213,215);
+            background: linear-gradient(90deg, rgba(213,213,215,1) 0%, rgba(140,140,145,1) 35%, rgba(205,219,222,1) 100%);
+        }
+    </style>
+</head>
+<body class="masthead bg-light" >
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <img style="height: auto; width: 2%;" class="mr-3"  src="{{ url_for('static', filename='img/letter-b.png') }}" alt="logo">
+        
+        <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="/adminDashboard">Bell's Shop</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link " href="/adminDashboard">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addProduct">Add products</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link active" href="/orders">Orders</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link " href="/account">Account</a>
+                </li>
+            </ul>
+        </div>
+        <a class="nav-link" href="/logout"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/turn-off.png') }}" alt="heart"></a>
+    </nav>
+    {% if orders %}
+        <h1 class="text-center">Here are your orders</h1>
+        <table class="table table-hover w-75 m-auto">
+            <thead>
+                <tr>
+                    <th scope="col">Order Number</th>
+                    <th scope="col">Customers Name</th>
+                    <th scope="col">Customers Address</th>
+                    <th scope="col">Products Name</th>
+                    <th scope="col">Products Price</th>
+                    <th scope="col">Order Date & Time</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <th scope="row">{{order.id}}</th>
+                    <td>{{order.username}}</td>
+                    <td>{{order.address}}</td>
+                    <td>
+                        <ul>
+                            {% for item in order.orderItems %}
+                            <li>{{item.name}}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>${{order.sumTotal}}</td>
+                    <td>{{order.created_at}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        
+    {% else %}
+        <div class="centerThis alert alert-danger border border-1 position-absolute p-3 w-50 m-auto mt-5" role="alert">
+            <h4 class=" color text-center">You have no orders.</h4>
+        </div>
+    {% endif %}
+
+
+
+    <footer class=" footer d-inline justify-content-between">
+        <!-- <img style="height: auto; width: 30px;" src="{{url_for('static', filename = 'img/shopping-cart.png')}}" alt="shoppingg-cart"> -->
+        <p class="text-light text-muted text-center">All rights reserved Terms of Use and Privacy Policy</p>
+    </footer>
+</body>
+</html>

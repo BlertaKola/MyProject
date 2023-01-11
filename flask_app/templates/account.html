@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Your Account</title>
+    <style>
+        body{
+            background: rgb(213,213,215);
+            background: linear-gradient(90deg, rgba(213,213,215,1) 0%, rgba(140,140,145,1) 35%, rgba(205,219,222,1) 100%);
+        }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adminDashboard.css') }}">
+</head>
+<body class="masthead bg-light" >
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <img style="height: auto; width: 2%;" class="mr-3"  src="{{ url_for('static', filename='img/letter-b.png') }}" alt="logo">
+        
+        <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="/adminDashboard">Bell's Shop</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link " href="/adminDashboard">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addProduct">Add products <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/orders">Orders</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link active" href="/account">Account</a>
+                </li>
+            </ul>
+        </div>
+        <a class="nav-link" href="/logout"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/turn-off.png') }}" alt="heart"></a>
+    </nav>
+
+
+    
+
+
+
+    <h1 class="text-center">Your Account</h1>
+    <div class="d-flex">
+        <div class="card" style="width: 18rem;">
+            {% if not loggedUser.image %}
+                <img src="{{ url_for('static', filename='img/profile.png') }}" alt="user" style="width: 70%; margin: 0 auto; margin-top: 4%;">
+            {% else %}
+            <img class="card-img-top m-auto p-2" style="height: 90%; width: 90%;" src="/static/img/{{loggedUser.image}}" alt="Card image cap">
+            {% endif %}
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input disabled type="text" class="form-control" name="username" value="{{loggedUser.username}}">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input disabled class="form-control" type="email" name="email" value="{{loggedUser.email}}" >
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text"  disabled class="form-control" name="address" value="{{loggedUser.address}}">
+                </div>
+            </div>
+        </div>
+        <div class="ml-5">
+            <div>
+                <form action="/uploadPhoto"  method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="image">Upload a photo:</label>
+                        <input type="file" min="1" class="form-control alert alert-primary h-auto w-auto p-3 mr-3" name="image" autocomplete="off" required>
+                    </div>
+                    <button type="submit" class="btn btn-dark">Submit</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-5 m-auto ">
+            <h3 class="text-dark text-center" >Reviews of your customers</h3>
+            {% if ratings %}
+                {% for rating in ratings %}
+                <div class="border border-1 m-2 p-3 bg-light text-dark">
+                    <div class="d-flex justify-content-evenly align-items-center">
+                        
+                        <h6>{{rating.content}} by <span class="text-primary">{{rating.username}}</span> </h6>
+                        
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class=" centerThis alert alert-danger border border-1 position-absolute p-3 w-50 m-auto mt-5" role="alert">
+                    <h4 class=" color text-center">Currently no reviews, add one.</h4>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <footer class=" footer d-inline justify-content-between">
+        <p class="text-light text-muted text-center">All rights reserved Terms of Use and Privacy Policy</p>
+    </footer>
+    
+</body>
+</html>

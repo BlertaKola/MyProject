@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adminDashboard.css') }}">
+    <title>Admin Dashboard</title>
+    <style>
+        body{
+            background: rgb(213,213,215);
+            background: linear-gradient(90deg, rgba(213,213,215,1) 0%, rgba(140,140,145,1) 35%, rgba(205,219,222,1) 100%);
+        }
+    </style>
+</head>
+<body class="masthead bg-light" >
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <img style="height: auto; width: 2%;" class="mr-3"  src="{{ url_for('static', filename='img/letter-b.png') }}" alt="logo">
+        
+        <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="/adminDashboard">Bell's Shop</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link active" href="/adminDashboard">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addProduct">Add products <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/orders">Orders</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/account">Account</a>
+                </li>
+            </ul>
+        </div>
+        <a class="nav-link" href="/logout"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/turn-off.png') }}" alt="heart"></a>
+    </nav>
+    <h1 class="text-dark text-center">Nothing can be done without hope and confidence</h1>
+    <h4 class="text-center text-danger">Welcome Administrator {{loggedUser.first_name}}</h4>
+    <section class="services">
+        <div class="container">
+            <div class="row">
+                <!-- <h2 class="text-center">What we can do for you</h2> -->
+                {% if products %}
+                    {% for product in products %}
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="services-info text-center">
+                                <img class="card-img-top" style="height: 100%; width: 100%;" src="/static/img/{{product.imageProduct}}" alt="Card image cap">
+                                <i class="fa fa-bar-chart fa-4x"></i>
+                                <h4>{{product.name}} </h4>
+                                <p>${{product.price}} </p>
+                                <a href="/editProduct/{{product.id}}" class="btn btn-info">Edit</a>
+                                {% if product.quantity > 0 %}
+                                    <div class="mt-3 alert alert-success small-button" role="alert">
+                                        <p>In-stock</p>
+                                    </div>
+                                {% else %}
+                                    <div class=" mt-3 alert alert-danger small-button" role="alert">
+                                        <p>Out-of-stock</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="centerThis alert alert-danger border border-1 position-absolute p-3 w-50 m-auto mt-5" role="alert">
+                        <h4 class=" color text-center">Your shop is empty.</h4>
+                        <h4 class=" color text-center">Go add some products!</h4>
+                    </div>
+                {% endif %}                
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <footer class=" footer d-inline justify-content-between">
+        <!-- <img style="height: auto; width: 30px;" src="{{url_for('static', filename = 'img/shopping-cart.png')}}" alt="shoppingg-cart"> -->
+        <p class="text-light text-muted text-center">All rights reserved Terms of Use and Privacy Policy</p>
+        
+        <!-- <a class="ml-auto p-2" href="#"><img style="height: auto; width: 3%;" src="{{ url_for('static', filename='img/instagram.png') }}" alt="instagram logo"></a>
+        <a class="ml-auto p-2" href="#"><img style="height: auto; width: 3%;" src="{{ url_for('static', filename='img/facebook.png') }}" alt="facebook logo"></a>
+        <a class="ml-auto p-2" href="#"><img style="height: auto; width: 3%;" src="{{ url_for('static', filename='img/phone.png') }}" alt="phone logo"></a>
+        <a class="ml-auto p-2" href="https://www.google.com/gmail/about/"><img style="height: auto; width: 3%;" src="{{ url_for('static', filename='img/gmail.png') }}" alt="gmail logo"></a>
+    -->
+    </footer>
+</body>
+</html>

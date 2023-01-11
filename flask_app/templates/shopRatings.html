@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        body{
+            background: rgb(213,213,215);
+            background: linear-gradient(90deg, rgba(213,213,215,1) 0%, rgba(140,140,145,1) 35%, rgba(205,219,222,1) 100%);
+        }
+    </style>
+
+</head>
+<body class="masthead bg-light" >
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <img style="height: auto; width: 2%;" class="mr-3"  src="{{ url_for('static', filename='img/letter-b.png') }}" alt="logo">
+        
+        
+        <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="#">Bell's Shop</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myWishlist"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/removeWishlist.png') }}" alt="heart"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myCart"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/bag.png') }}" alt="heart"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ratings"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/review.png') }}" alt="heart"></a>
+                </li>
+            </ul>
+        </div>
+        <a class="nav-link" href="/logout"><img style="height: auto; width: 30px;" src="{{ url_for('static', filename='img/turn-off.png') }}" alt="heart"></a>
+        
+    </nav>
+    <!-- <h4 class="text-center">Welcome {{loggedUser.username}} <span class="text-success">Leave your review for our shop</span></h4>
+    {% if ratings %}
+        {% for rating in ratings %}
+            smth
+        {% endfor %}
+    {% else %}
+        <div class="centerThis alert alert-danger border border-1 position-absolute p-3 w-50 m-auto mt-5" role="alert">
+            <h4 class=" color text-center">No reviews, add one.</h4>
+        </div>
+    {% endif %} -->
+
+
+
+
+    
+    <div class="row p-3 mt-5">
+        <div class="col-6 d-flex m-auto justify-content-center border border-1 p-4">
+            <form action="/leaveReview" method="post">
+                <h1>Leave a review for our shop</h1>
+                <div>
+                    <label for="content">Content</label>
+                    <textarea class="form-control" name="content" cols="20" rows="2"></textarea>
+                </div> 
+                {% with messages = get_flashed_messages(category_filter=["content"]) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-danger">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}   
+                <input class="mt-2 btn btn-success" type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="col-6">
+            <h3 class="mt-4 text-center" >Here are all the reviews of our customers</h3>
+            {% if ratings %}
+                {% for rating in ratings %}
+                <div class="border border-1 m-2 p-3 bg-light text-dark">
+                    <div class="d-flex justify-content-evenly align-items-center">
+                        
+                        <h4>{{rating.content}} by <span class="text-primary">{{rating.username}}</span> </h4>
+                        
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class=" centerThis alert alert-danger border border-1 position-absolute p-3 w-50 m-auto mt-5" role="alert">
+                    <h4 class=" color text-center">Currently no reviews, add one.</h4>
+                </div>
+            {% endif %}
+        </div>
+        
+    </div>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <footer class=" footer d-inline justify-content-between">
+        <!-- <img style="height: auto; width: 30px;" src="{{url_for('static', filename = 'img/shopping-cart.png')}}" alt="shoppingg-cart"> -->
+        <p class="text-light text-muted text-center">All rights reserved Terms of Use and Privacy Policy</p>
+        
+        <!-- <a class="ml-auto p-2" href="#"><img style="height: auto; width: 3%;" src="{{ url_for('static', filename='img/instagram.png') }}" alt="instagram logo"></a>
+        <a class="ml-auto p-2" href="#"><img style="height: auto; width: 3%;" src="{{ url_for('static', filename='img/facebook.png') }}" alt="facebook logo"></a>
+        <a class="ml-auto p-2" href="#"><img style="height: auto; width: 3%;" src="{{ url_for('static', filename='img/phone.png') }}" alt="phone logo"></a>
+        <a class="ml-auto p-2" href="https://www.google.com/gmail/about/"><img style="height: auto; width: 3%;" src="{{ url_for('static', filename='img/gmail.png') }}" alt="gmail logo"></a>
+    -->
+    </footer>
+</body>
+</html>

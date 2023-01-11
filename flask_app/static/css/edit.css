@@ -1,0 +1,51 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 10px 90px;
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid #fff;
+}
+
+nav ul li a:hover{
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10%;
+}
+
+.masthead{
+    background-size: cover;
+    min-height: 100vh;
+    position: relative;
+}
+.form-group label{
+    font-weight: bold;
+}
+
+.body{
+    font-size: 16px;
+	color: #fff;
+}
+
+.form-box {
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 5px;
+	box-shadow: 0 0 10px #000;
+    width: 55%;
+    margin: 0 auto;
+    margin-bottom: 5%;
+}
+.form-box:before {
+	width: 50%;
+	height: auto;
+	position: fixed;
+	filter: blur(2px);
+}
